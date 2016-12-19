@@ -43,9 +43,21 @@
 19.商品描述   （大量图片含文字说明，比如进口，带海关，证书，海外仓库等）
 
 20.图片大小图切换
+http://127.0.0.1:7000/products_pictures?product_id=1
+{"success":"success","message":"ok","data":[{"id":"1","product_id":"1","code":null,"location":"//img10.jximage.com/2015/0906/6fdf152afda343cf8ef4f71b17a7f4125.jpg","create_at":null,"update_at":null,"flag":0},{"id":"2","product_id":"1","code":null,"location":"\\images\\product03_1.jpg","create_at":null,"update_at":null,"flag":0},{"id":"3","product_id":"1","code":null,"location":"\\images\\product02_1.jpg","create_at":null,"update_at":null,"flag":0}],"service_info":"ec products service"}
 
 21.销量
 http://139.196.148.40:16001/get_product_sales?product_id=1
 {"success":true,"message":"ok","row":{"total_number":6,"total_sales":100,"updated_at":"2016-12-19 14:08:14"},"service_info":"ec bi service"}
 
-22.
+22.行业模板
+http://139.196.148.40:12001/get_product_stock_for_view?product_id=2&industry_id=2&stock_options={%22region_id%22:%221%22}
+{"success":true,"message":"ok","properties":[{"name":"尺码","field_name":"size_name","all_value":["37","38","39"]}],"stocks":{"37":8},"service_info":"ec stock service"}
+
+23.查询商品
+http://127.0.0.1:7000/product_info?product_id=1
+{"success":"success","message":"ok","data":{"id":"1","product_name":"40°人头马天醇XO干邑700ml","product_sale_price":1288,"product_marketing_price":1428,"sale_id":null,"after_sale_id":null,"same_code":null,"sku_id":null,"product_describe":"醇香丰盈、带来如丝般感觉，浓郁的蜜饯余味","industry_id":1,"time_to_market":null,"code":null,"color":null,"report_id":null,"service_id":null,"pay_way":null,"product_suggestion":null,"send_way":null,"weight":null,"delivery_area":null,"is_sale":null,"is_presale":null,"is_preorder":null,"is_down":null,"is_gift_product":null,"is_time_limit_sale":null,"price_stage":null,"barcode":null,"is_group_product":null,"is_replace_product":null,"is_crazy_product":null,"is_point_product":null,"is_net_point":null,"is_free_product":null,"is_low_price_product":null,"origin":null,"module_number":null},"service_info":"ec products service"}
+
+24.行业id找到行业信息
+http://127.0.0.1:7000/products_industries?product_id=2&industry_id=2
+{"success":"success","message":"ok","data":{"id":"1","product_id":"2","regions_id":2,"supply_id":"1","create_at":null,"update_at":null,"flag":0},"service_info":"ec products service"}
