@@ -14,7 +14,7 @@
 	<div>{{product.id}}</div>
 	<div>{{product.product_name}}</div>
 	<div>{{product.product_describe}}</div>
-	<div>已售：{{sales.total_number}}</div>
+	<div>已售：{{sales.total_number  || 0}}</div>
 	<div>¥ {{product.product_sale_price}}</div>
 	<div>¥ {{product.product_marketing_price}}</div>
 	<div>地区：
@@ -31,6 +31,8 @@
 	{% for property in industry["properties"] %}
 		<div>{{property["name"]}}:&nbsp; &nbsp;{{industry_info[property["field_name"]]}}</div>
 	{% endfor %}
+
+
 
 	{% for row in stock.properties %}
 		<div>row.quantity</div>

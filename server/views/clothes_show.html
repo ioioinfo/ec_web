@@ -14,7 +14,7 @@
 	<div>{{product.id}}</div>
 	<div>{{product.product_name}}</div>
 	<div>{{product.product_describe}}</div>
-	<div>已售：{{sales.total_number}}</div>
+	<div>已售：{{sales.total_number || 0}}</div>
 	<div>¥ {{product.product_sale_price}}</div>
 	<div>¥ {{product.product_marketing_price}}</div>
 	<div>地区：
@@ -32,6 +32,10 @@
 		<div>{{property["name"]}}:&nbsp; &nbsp;{{industry_info[property["field_name"]]}}</div>
 	{% endfor %}
 
+	{% for same_picture in same_pictures %}
+		<div><a href="/product_info?product_id={{same_picture.product_id}}"><img src="{{same_picture.location}}" width ="30px"/></a></div>
+	{% endfor %}
+	<!--
 	<div>
 		{% for property in stock.properties %}
 			<div>{{property["name"]}}:&nbsp; &nbsp;
@@ -44,7 +48,7 @@
 				{% endfor %}
 			</div>
 		{% endfor %}
-
 	</div>
+	-->
 </body>
 </html>
