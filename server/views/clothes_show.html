@@ -17,6 +17,8 @@
 	<div>已售：{{sales.total_number || 0}}</div>
 	<div>¥ {{product.product_sale_price}}</div>
 	<div>¥ {{product.product_marketing_price}}</div>
+	<div>评论总数：{{total_comments.total_number || 0}}</div>
+	<div>好评数：{{ total_comments.good_comment/total_comments.total_number*100 }}%</div>
 	<div>地区：
 		<select>
 			<option value="1">北京</option>
@@ -25,17 +27,17 @@
 		</select>
 	</div>
 	{% for picture in pictures %}
-		<img src="{{picture.location}}" width ="80px"/>
+		<img src="{{picture.location}}" width ="120px"/>
 	{% endfor %}
 
-	{% for property in industry["properties"] %}
+	<!-- {% for property in industry["properties"] %}
 		<div>{{property["name"]}}:&nbsp; &nbsp;{{industry_info[property["field_name"]]}}</div>
-	{% endfor %}
+	{% endfor %} -->
 
 	{% for same_picture in same_pictures %}
 		<div><a href="/product_info?product_id={{same_picture.product_id}}"><img src="{{same_picture.location}}" width ="30px"/></a></div>
 	{% endfor %}
-	<!--
+
 	<div>
 		{% for property in stock.properties %}
 			<div>{{property["name"]}}:&nbsp; &nbsp;
@@ -49,6 +51,21 @@
 			</div>
 		{% endfor %}
 	</div>
-	-->
+	<div>评论
+		{% for comment in comments %}
+			<div>{{comment.content}}</div>
+			<div>评论人:{{persons[comment.person_id].name}}</div>
+			<div>晒图:
+				{% for saidan in saidans[comment.id] %}
+					<img src="{{saidan.location}}" width="120"></img>
+				{% endfor %}
+			</div>
+		{% endfor %}
+	</div>
+	<div>商品详细：
+		{% for product_detail in product_details %}
+			<img src="{{product_detail.picture_location}}"></img>
+		{% endfor %}
+	</div>
 </body>
 </html>

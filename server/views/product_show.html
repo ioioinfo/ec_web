@@ -17,6 +17,7 @@
 	<div>已售：{{sales.total_number  || 0}}</div>
 	<div>¥ {{product.product_sale_price}}</div>
 	<div>¥ {{product.product_marketing_price}}</div>
+	<div>评论总数：{{total_comments.total_number || 0}}</div>
 	<div>地区：
 		<select>
 			<option value="1">北京</option>
@@ -25,7 +26,7 @@
 		</select>
 	</div>
 	{% for picture in pictures %}
-		<img src="{{picture.location}}" width ="80px"/>
+		<img src="{{picture.location}}" width ="120px"/>
 	{% endfor %}
 
 	{% for property in industry["properties"] %}
@@ -41,6 +42,21 @@
 		<div>row.warehouse_id</div>
 		<div>row.region_id</div>
 	{% endfor %}
-
+	<div>评论
+		{% for comment in comments %}
+			<div>{{comment.content}}</div>
+			<div>评论人:{{persons[comment.person_id].name}}</div>
+			<div>晒图:
+				{% for saidan in saidans[comment.id] %}
+					<img src="{{saidan.location}}" width="120"></img>
+				{% endfor %}
+			</div>
+		{% endfor %}
+	</div>
+	<div>商品详细：
+		{% for product_detail in product_details %}
+	 		<img src="{{product_detail.picture_location}}"></img>
+		{% endfor %}
+	</div>
 </body>
 </html>

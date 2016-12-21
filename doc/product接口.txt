@@ -1,9 +1,13 @@
 
 商品需求接口：
 
-1.同类商品   （不同颜色，不同产品id的同类商品，search中） 
+1.同类商品   （不同颜色，不同产品id的同类商品，search中）
+http://127.0.0.1:7000/get_same_products?product_id=2&same_code=1
+{"success":true,"message":"ok","rows":[{"id":"2"},{"id":"3"}],"service_info":"ec products service"}
 
 2.评论       （其他购买客户评价，带5星评价）
+http://127.0.0.1:8060/comments_show?product_id=1
+{"success":true,"message":"ok","rows":[{"id":"1","product_id":"1","person_id":"1","order_id":"1","parent":0,"content":"这个商品太好了","satisfaction_score":5,"useful_number":1,"unuseful_number":null,"is_recommend":1,"is_yiming":null,"origin":null,"create_at":null,"update_at":null,"flag":0},{"id":"2","product_id":"1","person_id":"2","order_id":"2","parent":0,"content":"真差劲","satisfaction_score":1,"useful_number":1,"unuseful_number":null,"is_recommend":null,"is_yiming":null,"origin":null,"create_at":null,"update_at":null,"flag":0}]}
 
 3.促销       （活动，套餐(group),赠品（非卖区分），减免，打折，是否可以优惠卷+积分兑换，送金币等等 ，可以做在活动中）
 
@@ -23,21 +27,23 @@
 
 11.二维码    （手机端扫描）
 
-12.咨询      （客服，或者商家）
+12.咨询      （客服，或者商家,直接客服咨询）
 
-13.举报      （已购买客户可以举报）
+13.举报      （已购买客户可以举报）1
 
 14.猜我喜欢  （我喜欢的商品）
 
 15.推荐	     （同上）
 
-16.建议      （可以是留言，也可以是互动你问我答）
+16.提问      （可以是留言，也可以是互动你问我答） 无用
 
 17.商品售后
 
 18.温馨提示   （视商品而定，比如衣服，大于同码，可以是店主的，也可以是系统比如不支持积分，或者对商品使用规范）
 
-19.商品描述   （大量图片含文字说明，比如进口，带海关，证书，海外仓库等）
+19.商品描述   （大量图片含文字说明，比如进口，带海关，证书，海外仓库等）单独一个表 1
+http://127.0.0.1:7000/get_product_details?product_id=1
+{"success":true,"message":"ok","rows":[{"product_id":"1","picture_location":"//img06.jiuxian.com/bill/2014/0510/d63369026d6940abba416225d59f3bff.jpg"},{"product_id":"1","picture_location":"//img06.jiuxian.com/bill/2015/0709/3b655db39b8b414e84a237142d53e8e3.jpg"},{"product_id":"1","picture_location":"//img07.jximage.com/bill/2015/0709/efaed3c2c851438092a832a1ab302e61.jpg"},{"product_id":"1","picture_location":"//img08.jiuxian.com/bill/2015/0709/1f6a4cae904d4e2591325e82ff0c3187.jpg"}],"service_info":"ec products service"}
 
 20.图片大小图切换
 http://127.0.0.1:7000/products_pictures?product_id=1
