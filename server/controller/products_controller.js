@@ -86,6 +86,11 @@ var find_product_details = function(product_id, cb){
 	url = url + product_id;
 	do_get_method(url,cb);
 };
+//查找商品分类
+var find_sorts = function(cb){
+	var url = "http://127.0.0.1:8050/search_sorts";
+	do_get_method(url,cb);
+};
 exports.register = function(server, options, next){
 	server.route([
 		{
@@ -122,24 +127,32 @@ exports.register = function(server, options, next){
 								var stocks = content.stocks;
 								var properties = content.properties;
 								ep.emit("stock",{"properties":properties,"stocks":stocks});
+							}else {
+								ep.emit("stock",{"properties":{},"stocks":{}});
 							}
 						});
 						find_pictures_byId(product_id, function(err, content){
 							if (!err) {
 								var pictures = content.rows;
 								ep.emit("pictures", pictures);
+							}else {
+								ep.emit("pictures", {});
 							}
 						});
 						find_product_sales(product_id, function(err, content){
 							if (!err) {
 								var sales = content.row;
 								ep.emit("sales", sales);
+							}else {
+								ep.emit("sales", {});
 							}
 						});
 						find_total_comments(product_id, function(err, content){
 							if (!err) {
 								var total_comments = content.row;
 								ep.emit("total_comments", total_comments);
+							}else {
+								ep.emit("total_comments", {});
 							}
 						});
 						find_same_products(product_id, same_code, function(err, content){
@@ -185,14 +198,16 @@ exports.register = function(server, options, next){
 											for (var i = 0; i < persons.length; i++) {
 												person_map[persons[i].id] = persons[i];
 											}
-											for (var i = 0; i < saidans.length; i++) {
-												var saidan = saidans[i]; //一个晒单对象
-												var comment_saidans = [];
-												if (saidan_map[saidan.product_comments_id]) { //晒单评论id对应的不存在
-													comment_saidans = saidan_map[saidan.product_comments_id]; //晒单 = 晒单产品id
+											if (saidans) {
+												for (var i = 0; i < saidans.length; i++) {
+													var saidan = saidans[i]; //一个晒单对象
+													var comment_saidans = [];
+													if (saidan_map[saidan.product_comments_id]) { //晒单评论id对应的不存在
+														comment_saidans = saidan_map[saidan.product_comments_id]; //晒单 = 晒单产品id
+													}
+													comment_saidans.push(saidan); //晒单添加 晒单对象
+													saidan_map[saidan.product_comments_id] = comment_saidans; //晒单评论id = 晒单
 												}
-												comment_saidans.push(saidan); //晒单添加 晒单对象
-												saidan_map[saidan.product_comments_id] = comment_saidans; //晒单评论id = 晒单
 											}
 											ep.emit("persons", person_map);
 											ep.emit("saidans", saidan_map);
@@ -215,7 +230,14 @@ exports.register = function(server, options, next){
 									});
 								}else {
 									ep.emit("comments", []);
+									ep.emit("persons", []);
+									ep.emit("saidans", []);
 								}
+							}
+							else {
+								ep.emit("comments", []);
+								ep.emit("persons", []);
+								ep.emit("saidans", []);
 							}
 						});
 						find_product_details(product_id, function(err, content){
@@ -232,6 +254,32 @@ exports.register = function(server, options, next){
 				});
 			}
 		},
+		{
+			method: 'GET',
+			path: '/search_result',
+			handler: function(request, reply){
+				find_sorts(function(err, content){
+					if (!err) {
+						var  sorts = content.rows;
+						console.log("sorts: "+sorts);
+						var level_map = {};
+						for (var i = 0; i < sorts.length; i++) {
+							var parent_id = sorts[i].parent.toString() ;
+							var level_sorts = [];
+							if (level_map[parent_id]) {
+								level_sorts = level_map[parent_id];
+							}
+							level_sorts.push(sorts[i]);
+							level_map[parent_id] = level_sorts;
+						}
+						console.log("level_map: "+JSON.stringify(level_map));
+						return reply.view("search_result",{"sorts":level_map})
+					}else {
+					}
+				});
+			}
+		},
+
 
     ]);
 

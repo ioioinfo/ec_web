@@ -42,6 +42,7 @@
 		<div>row.warehouse_id</div>
 		<div>row.region_id</div>
 	{% endfor %}
+	
 	<div>评论
 		{% for comment in comments %}
 			<div>{{comment.content}}</div>
@@ -55,7 +56,7 @@
 	</div>
 	<div>商品详细：
 		{% for product_detail in product_details %}
-	 		<img src="{{product_detail.picture_location}}"></img>
+	 		<div><img src="{{product_detail.picture_location}}"></img></div>
 		{% endfor %}
 	</div>
 </body>
