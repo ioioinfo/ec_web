@@ -6,12 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
 <title>产品展示</title>
 <style type="text/css">
 </style>
 </head>
 <body>
-	<div>{{product.id}}</div>
+	<input id="product_id" type="text" value="{{product.id}}" style="display:none;"/>
+	<input id="page_name" type="text" value="{{page_name}}" style="display:none;"/>
 	<div>{{product.product_name}}</div>
 	<div>{{product.product_describe}}</div>
 	<div>已售：{{sales.total_number  || 0}}</div>
@@ -26,14 +28,12 @@
 		</select>
 	</div>
 	{% for picture in pictures %}
-		<img src="{{picture.location}}" width ="120px"/>
+		<img src="\images\{{picture.location}}" width ="120px"/>
 	{% endfor %}
 
 	{% for property in industry["properties"] %}
 		<div>{{property["name"]}}:&nbsp; &nbsp;{{industry_info[property["field_name"]]}}</div>
 	{% endfor %}
-
-
 
 	{% for row in stock.properties %}
 		<div>row.quantity</div>
@@ -42,7 +42,7 @@
 		<div>row.warehouse_id</div>
 		<div>row.region_id</div>
 	{% endfor %}
-	
+
 	<div>评论
 		{% for comment in comments %}
 			<div>{{comment.content}}</div>
@@ -54,10 +54,29 @@
 			</div>
 		{% endfor %}
 	</div>
+	<select id="total_items">
+		<option value="1" checked>1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+	</select>
+	<div id="add_shopping_cart">添加到购物车</div>
 	<div>商品详细：
 		{% for product_detail in product_details %}
 	 		<div><img src="{{product_detail.picture_location}}"></img></div>
 		{% endfor %}
 	</div>
+	<script>
+	$(function() {
+		$("#add_shopping_cart").click(function(){
+			var product_id = $("#product_id").val();
+			var total_items = $("#total_items").val();
+			var page_name = $("#page_name").val();
+			location.href = "/add_shopping_cart?product_id="+product_id+"&total_items="+total_items;
+		});
+	});
+	</script>
 </body>
 </html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
+<title>产品展示</title>
+<style type="text/css">
+</style>
+</head>
+<body>
+	<div>购物车：{{num || 0}}</div>
+	<div>{{product.product_name}}</div>
+	<div>¥ {{product.product_sale_price}}</div>
+	<div>总数：{{total_items || 0}}</div>
+	<div>总计：{{total_items * product.product_sale_price}}</div>
+	<input type="button" id="show_shopping_carts" value="查看购物车">
+	<script>
+		$(function() {
+			$("#show_shopping_carts").click(function(){
+
+				location.href = "/show_shopping_carts";
+			});
+		});
+	</script>
+
+
+</body>
+</html>
