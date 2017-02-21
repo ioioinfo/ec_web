@@ -46,7 +46,7 @@
 	<div>评论
 		{% for comment in comments %}
 			<div>{{comment.content}}</div>
-			<div>评论人:{{persons[comment.person_id].name}}</div>
+			<div>评论人:{{persons[comment.person_id].nickname}}</div>
 			<div>晒图:
 				{% for saidan in saidans[comment.id] %}
 					<img src="{{saidan.location}}" width="120"></img>

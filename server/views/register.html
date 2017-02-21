@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
+<title></title>
+<style type="text/css">
+	body{
+		margin: 0!important;
+		font-family: "微软雅黑";
+
+	}
+	a{
+		text-decoration: none;
+	}
+	.header{
+		border-bottom: 1px solid gray;
+	}
+	.header img{
+		padding: 20px;
+	}
+	.header span{
+		position: relative;
+		bottom: 30px;
+		font-size: 16px;
+	}
+	.header span:nth-child(3){
+		padding-left: 880px;
+		font-size: 14px;
+	}
+	.form{
+		width: 49%;
+		border-right: 1px solid gray;
+	}
+	::-webkit-input-placeholder {
+		font-size: 14px;
+		font-family: "微软雅黑";
+	}
+	.redstar{
+		color: red;
+	}
+	input {
+		border: none;
+		outline: none;
+	}
+	.outside{
+		border: 1px solid gray;
+		width: 400px
+	}
+	#verifycode{
+		width: 230px;
+	}
+	#telverifycode{
+		width: 200px;
+	}
+	.form div{
+		margin: 0 auto;
+		margin-bottom: 20px;
+		padding: 10px;
+	}
+	.form{
+		margin-top: 30px;
+		float: left;
+	}
+	.form button{
+		margin-left: 19.3%;
+		width: 422px;
+		background-color: rgb(232,78,64);
+		border: none;
+		color: white;
+		padding: 10px;
+		font-family: "微软雅黑";
+	}
+	#username{
+		padding-left: 30px;
+	}
+	#password{
+		padding-left: 45px;
+	}
+	#passworddc{
+		padding-left: 12px;
+	}
+	#tel{
+		padding-left: 40px;
+	}
+	#verifycode{
+		padding-left: 30px;
+	}
+	.picverify{
+		margin-left: -30px;
+	}
+	.right-div{
+		float: left;
+		width: 50%;
+	}
+	.right-div img{
+		margin-left: 400px;
+		margin-top: 260px;
+	}
+	.bottom{
+		border-top: 1px solid gray;
+		margin-top: 550px;
+		text-align: center;
+	}
+	.bottom p{
+		font-family: "微软雅黑";
+		font-size: 14px;
+	}
+</style>
+</head>
+<body>
+	<div class="header">
+		<img src="images/icon.png"/>
+		<span>欢迎注册</span>
+		<span><a href="/login">已有账号？请登录</a></span>
+	</div>
+	<div class="form">
+		<div class="outside"><span class="redstar">*</span><label for="username">用户名：</label><input type="text" id="username" placeholder="您的账户和登录名"/></div>
+		<div class="outside"><span class="redstar">*</span><label for="password">密码：</label><input type="text" id="password" placeholder="建议至少使用两种字符组合"/></div>
+		<div class="outside"><span class="redstar">*</span><label for="passworddc">确认密码：</label><input type="text" id="passworddc" placeholder="请再次输入密码"/></div>
+		<div class="outside"><span class="redstar">*</span><label for="tel">手机号:</label><input type="text" id="tel" placeholder="使用建议常用手机号"/></div>
+		<div class="outside"><span class="redstar">*</span><label for="verifycode">验证码：</label><input type="text" id="verifycode" placeholder="请输入验证码"/><span class="picverify">1234</span></div>
+		<div class="outside"><span class="redstar">*</span><label for="telverifycode">手机验证码：</label><input type="text" id="telverifycode" placeholder="请输入验证码"/><span>获取验证码</span></div>
+		<div style="margin-left: 17.2%;"><input type="checkbox" id="check"/> 我已阅读并同意 《注册协议》</div>
+		<button type="button" class="submit">立即注册</button>
+	</div>
+	<div class="right-div">
+		<img src="images/icon.png"/>
+	</div>
+	<div class="bottom">
+		<p>网站备案号</p>
+	</div>
+	<script>
+	$(function() {
+		$(".submit").click(function(){
+			var username = $("#username").val();
+			var password = $("#password").val();
+			var passworddc = $("#passworddc").val();
+			var mobile = $("#tel").val();
+			var check = $("#check").is(":checked");
+			var telverifycode = $("#telverifycode").val();
+			var verifycode = $("#verifycode").val();
+
+			if (!username) {
+				alert("请输入用户名")
+				return;
+			}else if (!password) {
+				alert("请输入密码")
+				return;
+			}else if ( passworddc != password) {
+				alert("输入密码不统一")
+				return;
+			}else if (!mobile) {
+				alert("请输入手机号")
+				return;
+			}else if (!verifycode) {
+				alert("验证码不能为空")
+				return;
+			}else if (!telverifycode) {
+				alert("手机验证码不能为空")
+				return;
+			}else if (!check) {
+				alert("未同意协议")
+				return;
+			}
+
+			$.post("/register_submit",{"username":username,"password":password,"mobile":mobile},function(data){
+				if (data.success) {
+					alert("success");
+				}else {
+					alert("fail");
+				}
+			})
+		});
+	});
+	</script>
+</body>
+</html>
