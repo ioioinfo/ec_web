@@ -77,13 +77,13 @@ var find_total_comments = function(product_id, cb){
 };
 //根据id找到评论
 var find_comments_info = function(product_id, cb){
-	var url = "http://127.0.0.1:8060/comments_show?product_id=";
+	var url = "http://127.0.0.1:18014/comments_show?product_id=";
 	url = url + product_id;
 	do_get_method(url,cb);
 };
 //根据id找到评论
 var find_again_comments = function(product_id, cb){
-	var url = "http://127.0.0.1:8060/again_comments?product_id=";
+	var url = "http://127.0.0.1:18014/again_comments?product_id=";
 	url = url + product_id;
 	do_get_method(url,cb);
 }
@@ -103,7 +103,7 @@ var find_comments_personsVip = function(comments_persons, cb){
 };
 //根据评论找晒单
 var find_saidans_pictures = function(comments_ids, cb){
-	var url = "http://127.0.0.1:8060/comments_saidan?comments_ids=";
+	var url = "http://127.0.0.1:18014/comments_saidan?comments_ids=";
 	url = url + comments_ids;
 	do_get_method(url,cb);
 };
@@ -115,23 +115,23 @@ var find_product_details = function(product_id, cb){
 };
 //查找商品分类
 var find_sorts = function(cb){
-	var url = "http://127.0.0.1:8050/search_sorts";
+	var url = "http://127.0.0.1:18016/search_sorts";
 	do_get_method(url,cb);
 };
 //添加到购物车
 var add_shopping_cart = function(cart_code,product_id,total_items,cb){
-	var url = "http://127.0.0.1:8030/add_shopping_cart?product_id=";
+	var url = "http://127.0.0.1:18015/add_shopping_cart?product_id=";
 	url = url + product_id +"&total_items=" + total_items + "&cart_code=" + cart_code;
 	do_get_method(url,cb);
 };
 //查询购物车商品数量
 var find_shopping_items = function(cb){
-	var url = "http://127.0.0.1:8030/find_shopping_items";
+	var url = "http://127.0.0.1:18015/find_shopping_items";
 	do_get_method(url,cb);
 };
 //显示购物车商品
 var show_shopping_carts = function(cart_code, cb){
-	var url = "http://127.0.0.1:8030/show_shopping_carts?cart_code=";
+	var url = "http://127.0.0.1:18015/show_shopping_carts?cart_code=";
 	url = url + cart_code;
 	do_get_method(url,cb);
 };
@@ -149,7 +149,7 @@ var find_products_with_picture = function(product_ids,cb){
 };
 //删除购物车
 var delete_shopping_carts = function(cart_code,product_ids,cb){
-	var url ="http://127.0.0.1:8030/delete_items?product_ids=";
+	var url ="http://127.0.0.1:18015/delete_items?product_ids=";
 	url = url + product_ids + "&cart_code=" + cart_code;
 	do_get_method(url,cb);
 };
