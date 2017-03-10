@@ -65,6 +65,7 @@
 	<div id="add_shopping_cart">添加到购物车</div>
 	<div>评论
 		{% for comment in comments %}
+		{% if persons[comment.person_id] %}
 			<div>{{comment.content}}</div>
 			<div>评论人:{{persons[comment.person_id].nickname}}</div>
 			<div>晒图:
@@ -72,6 +73,7 @@
 					<img src="{{saidan.location}}" width="120"></img>
 				{% endfor %}
 			</div>
+		{% endif %}
 		{% endfor %}
 	</div>
 	<div>商品详细：

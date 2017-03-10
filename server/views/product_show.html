@@ -32,7 +32,7 @@
 	{% endfor %}
 
 	{% for property in industry["properties"] %}
-		<div>{{property["name"]}}:&nbsp; &nbsp;{{industry_info[property["field_name"]]}}</div>
+		<div>{{property["name"]}}:&nbsp; &nbsp;{{industry_info[property["field_name"]] or ''}}</div>
 	{% endfor %}
 
 	{% for row in stock.properties %}
@@ -45,6 +45,7 @@
 
 	<div>评论
 		{% for comment in comments %}
+		{% if persons[comment.person_id] %}
 			<div>{{comment.content}}</div>
 			<div>评论人:{{persons[comment.person_id].nickname}}</div>
 			<div>晒图:
@@ -52,6 +53,7 @@
 					<img src="{{saidan.location}}" width="120"></img>
 				{% endfor %}
 			</div>
+		{% endif %}
 		{% endfor %}
 	</div>
 	<select id="total_items">

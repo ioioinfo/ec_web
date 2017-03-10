@@ -163,7 +163,6 @@ exports.register = function(server, options, next){
 				return reply({"success":"ok","server":"ec_product server, ec_interaction server, ec_shopping_cart server"});
 			}
 		},
-
 		//产品信息展示
 		{
 			method: 'GET',
@@ -182,6 +181,9 @@ exports.register = function(server, options, next){
 						var industry_id = product.industry_id;
 						var same_code = product.same_code;
 						var industry = industries[industry_id];
+						if (!industry) {
+							return reply("行业不存在:"+industry_id);
+						}
 						var stock_options = {"region_id":"1"};
 						var page_name = industry["view_name"];
 
@@ -224,7 +226,7 @@ exports.register = function(server, options, next){
 						});
 						find_total_comments(JSON.stringify([product_id]), function(err, content){
 							if (!err) {
-								if (content.row.length>0) {
+								if (content.row && content.row.length>0) {
 									var total_comments = content.row[0];
 									ep.emit("total_comments", total_comments);
 								}else {
@@ -234,31 +236,35 @@ exports.register = function(server, options, next){
 								ep.emit("total_comments", {});
 							}
 						});
-						find_same_products(product_id, same_code, function(err, content){
-							if (!err) {
-								var same_products = content.rows;
-								var same_product_ids = [];
-								if (same_products) {
-									for (var i = 0; i < same_products.length; i++) {
-										same_product_ids.push(same_products[i].id);
-									}
-									console.log("same_product_ids: "+same_product_ids);
-									find_samll_picture(same_product_ids, function(err, content){
-										if (!err) {
-											var same_pictures = content.rows;
-											console.log(same_pictures);
-											ep.emit("same_pictures", same_pictures);
-										} else {
-											ep.emit("same_pictures", []);
+						if (!same_code) {
+							ep.emit("same_pictures", []);
+						}else {
+							find_same_products(product_id, same_code, function(err, content){
+								if (!err) {
+									var same_products = content.rows;
+									var same_product_ids = [];
+									if (same_products) {
+										for (var i = 0; i < same_products.length; i++) {
+											same_product_ids.push(same_products[i].id);
 										}
-									});
+										console.log("same_product_ids: "+same_product_ids);
+										find_samll_picture(same_product_ids, function(err, content){
+											if (!err) {
+												var same_pictures = content.rows;
+												console.log(same_pictures);
+												ep.emit("same_pictures", same_pictures);
+											} else {
+												ep.emit("same_pictures", []);
+											}
+										});
+									}else {
+										ep.emit("same_pictures", []);
+									}
 								}else {
 									ep.emit("same_pictures", []);
 								}
-							}else {
-								ep.emit("same_pictures", []);
-							}
-						});
+							});
+						}
 						find_comments_info(product_id, function(err, content){
 							if (!err) {
 								var comments = content.rows;
